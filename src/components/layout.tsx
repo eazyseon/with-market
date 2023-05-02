@@ -46,12 +46,22 @@ export default function Layout({
             </svg>
           </button>
         ) : null}
-        {title ? <span className="mx-auto">{title}</span> : null}
+        {title ? (
+          <span className="mx-auto text-primaryB-400">{title}</span>
+        ) : null}
       </div>
       <div className={cls("pt-12", hasTabBar ? "pb-24" : "")}>{children}</div>
       {hasTabBar ? (
         <nav className="bg-white max-w-xl text-gray-700 border-t fixed bottom-0 w-full px-10 pb-5 pt-3 flex justify-between text-xs">
-          <Link href="/" className="flex flex-col items-center space-y-2">
+          <Link
+            href="/"
+            className={cls(
+              "flex flex-col items-center space-y-2 ",
+              router.pathname === "/"
+                ? "text-primaryB-400"
+                : "hover:text-gray-500 transition-colors"
+            )}
+          >
             <svg
               className="w-6 h-6"
               fill="none"
@@ -67,7 +77,15 @@ export default function Layout({
               ></path>
             </svg>
           </Link>
-          <Link href="/with" className="flex flex-col items-center space-y-2">
+          <Link
+            href="/with"
+            className={cls(
+              "flex flex-col items-center space-y-2",
+              router.pathname === "/with"
+                ? "text-primaryB-400"
+                : "hover:text-gray-500 transition-colors"
+            )}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -84,7 +102,15 @@ export default function Layout({
               />
             </svg>
           </Link>
-          <Link href="/search" className="flex flex-col items-center space-y-2">
+          <Link
+            href="/search"
+            className={cls(
+              "flex flex-col items-center space-y-2",
+              router.pathname === "/search"
+                ? "text-primaryB-400"
+                : "hover:text-gray-500 transition-colors"
+            )}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -100,9 +126,16 @@ export default function Layout({
                 d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
               />
             </svg>
-            {/*<span>SEARCH</span>*/}
           </Link>
-          <Link href="/mypage" className="flex flex-col items-center space-y-2">
+          <Link
+            href="/mypage"
+            className={cls(
+              "flex flex-col items-center space-y-2",
+              router.pathname === "/mypage"
+                ? "text-primaryB-400"
+                : "hover:text-gray-500 transition-colors"
+            )}
+          >
             <svg
               className="w-6 h-6"
               fill="none"
