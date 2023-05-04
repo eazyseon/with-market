@@ -1,23 +1,37 @@
+import { UseFormRegisterReturn } from "react-hook-form";
+
 interface InputProps {
   label: string;
   name: string;
   kind?: "text" | "price";
   type: string;
-  [key: string]: any;
+  register: UseFormRegisterReturn;
+  required: boolean;
 }
 
-const Input = ({ label, name, kind = "text", type, ...rest }: InputProps) => {
+const Input = ({
+  label,
+  name,
+  kind = "text",
+  register,
+  type,
+  required,
+}: InputProps) => {
   return (
     <>
-      <label className="mb-1 block text-sm font-medium text-gray-700">
+      <label
+        className="mb-1 block text-sm font-medium text-gray-700"
+        htmlFor={name}
+      >
         {label}
       </label>
       {kind === "text" ? (
         <div className="rounded-md relative flex  items-center shadow-sm">
           <input
             id={name}
+            {...register}
             type={type}
-            {...rest}
+            required={required}
             className="appearance-none pl-7 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primaryB-400 focus:border-primaryB-400"
           />
         </div>
@@ -29,8 +43,9 @@ const Input = ({ label, name, kind = "text", type, ...rest }: InputProps) => {
           </div>
           <input
             id={name}
+            {...register}
             type={type}
-            {...rest}
+            required={required}
             className="appearance-none pl-7 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primaryB-400 focus:border-primaryB-400"
           />
         </div>

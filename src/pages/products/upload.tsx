@@ -3,11 +3,13 @@ import Layout from "@/components/layout";
 import Button from "@/components/button";
 import TextArea from "@/components/textarea";
 import Input from "@/components/input";
+import { useForm } from "react-hook-form";
 
 const Upload: NextPage = () => {
+  const { register, handleSubmit } = useForm();
   return (
     <Layout canGoBack>
-      <div className="px-4 py-10">
+      <form className="px-4 py-10">
         <div>
           <label className="w-full cursor-pointer text-gray-600 hover:border-primaryB-400 hover:text-primaryB-400 flex items-center justify-center border-2 border-dashed border-gray-300 h-48 rounded-md">
             <svg
@@ -29,24 +31,27 @@ const Upload: NextPage = () => {
         </div>
         <div className="my-5">
           <Input
+            register={register("name", { required: true })}
             label="글 제목"
-            id="name"
+            name="name"
             type="text"
             placeholder="제목을 입력해 주세요"
           />
         </div>
         <div className="my-5">
           <Input
+            register={register("place", { required: true })}
             label="장소"
-            id="place"
+            name="place"
             type="text"
             placeholder="장소를 입력해 주세요"
           />
         </div>
         <div className="my-5">
           <Input
+            register={register("price", { required: true })}
             label="가격"
-            id="price"
+            name="price"
             type="text"
             kind="price"
             placeholder="가격을 입력해 주세요"
@@ -54,6 +59,7 @@ const Upload: NextPage = () => {
         </div>
         <div className="my-5">
           <Input
+            register={register("people", { required: true })}
             label="인원"
             id="people"
             type="text"
@@ -61,10 +67,15 @@ const Upload: NextPage = () => {
           />
         </div>
         <div>
-          <TextArea label="설명" placeholder="글 설명을 입력해 주세요" />
+          <TextArea
+            register={register("description", { required: true })}
+            name="description"
+            label="설명"
+            placeholder="글 설명을 입력해 주세요"
+          />
         </div>
         <Button text="완료" />
-      </div>
+      </form>
     </Layout>
   );
 };
