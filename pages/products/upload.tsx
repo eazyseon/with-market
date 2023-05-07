@@ -4,12 +4,34 @@ import Button from "@/components/button";
 import TextArea from "@/components/textarea";
 import Input from "@/components/input";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+
+interface UploadProductForm {
+  name: string;
+  place: string;
+  price: number;
+  people: number;
+  description: string;
+}
 
 const Upload: NextPage = () => {
-  const { register, handleSubmit } = useForm();
+  const { data: session, status } = useSession();
+  const { register, handleSubmit } = useForm<UploadProductForm>();
+  const onValid = (data: UploadProductForm) => {
+    fetch("/api/products/add", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
+
   return (
     <Layout canGoBack>
-      <form className="px-4 py-10">
+      <form className="px-4 py-10" onSubmit={handleSubmit(onValid)}>
         <div>
           <label className="w-full cursor-pointer text-gray-600 hover:border-primaryB-400 hover:text-primaryB-400 flex items-center justify-center border-2 border-dashed border-gray-300 h-48 rounded-md">
             <svg
