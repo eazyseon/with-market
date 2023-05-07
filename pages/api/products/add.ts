@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@/libs/client";
+import client from "@/libs/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { DefaultSession } from "next-auth/src/core/types";
@@ -20,7 +20,7 @@ export default async function handler(
   }
   try {
     const { name, place, price, people, description } = req.body;
-    const newProduct = await prisma.product.create({
+    const newProduct = await client.product.create({
       data: {
         image: "",
         name,
