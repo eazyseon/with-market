@@ -2,9 +2,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@/libs/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { DefaultSession } from "next-auth/src/core/types";
+import { Session } from "next-auth/src/core/types";
 
-interface sessionId extends DefaultSession {
+interface sessionId extends Session {
   id?: string;
 }
 

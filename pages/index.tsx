@@ -2,13 +2,31 @@ import type { NextPage } from "next";
 import Layout from "@/components/layout";
 import FloatingButton from "@/components/floating-button";
 import Item from "@/components/item";
+import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    fetch("/api/products/get", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, []);
   return (
     <Layout title="HOME" hasTabBar>
       <div className="flex flex-col space-y-5 divide-y">
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-          <Item />
+        {data?.products?.map((product, i) => (
+          <Item
+            key={product.id}
+            name={product.name}
+            place={product.place}
+            price={product.price}
+            people={product.people}
+            id={product.id}
+          />
         ))}
         <FloatingButton href="/products/upload">
           <svg
