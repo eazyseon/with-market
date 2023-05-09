@@ -22,10 +22,8 @@ interface UploadProduct {
 
 const Upload: NextPage = () => {
   const { register, handleSubmit } = useForm<UploadProductForm>();
-  const [uploadProduct, { loading }] = useUploadData<UploadProduct>(
-    "/api/products/add",
-    "POST"
-  );
+  const [uploadProduct, { loading }] =
+    useUploadData<UploadProduct>("/api/products/add");
   const onValid = ({
     name,
     place,

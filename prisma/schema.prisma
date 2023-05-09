@@ -45,6 +45,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   products      Product[]
+  posts           Post[]
 }
 
 model VerificationToken {
@@ -67,4 +68,15 @@ model Product {
   price       Int
   people      Int
   description String   @db.MediumText
+}
+
+model Post {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  question  String      @db.MediumText
+  latitude  Float?
+  longitude Float?
 }
