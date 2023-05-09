@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import client from "@/libs/client";
+import client from "@/libs/server/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 

@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { Session } from "next-auth/src/core/types";
-import client from "@/libs/client";
+import client from "@/libs/server/client";
 
 interface sessionId extends Session {
   id?: string;

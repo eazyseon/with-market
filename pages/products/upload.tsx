@@ -4,7 +4,8 @@ import Button from "@/components/button";
 import TextArea from "@/components/textarea";
 import Input from "@/components/input";
 import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
+import { Product } from "@prisma/client";
+import useUploadData from "@/libs/client/useUploadData";
 
 interface UploadProductForm {
   name: string;
@@ -14,19 +15,26 @@ interface UploadProductForm {
   description: string;
 }
 
+interface UploadProduct {
+  message?: string;
+  product: Product;
+}
+
 const Upload: NextPage = () => {
-  const { data: session, status } = useSession();
   const { register, handleSubmit } = useForm<UploadProductForm>();
-  const onValid = (data: UploadProductForm) => {
-    fetch("/api/products/add", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+  const [uploadProduct, { loading }] = useUploadData<UploadProduct>(
+    "/api/products/add",
+    "POST"
+  );
+  const onValid = ({
+    name,
+    place,
+    price,
+    people,
+    description,
+  }: UploadProductForm) => {
+    if (loading) return;
+    uploadProduct({ name, place, price, people, description });
   };
 
   return (
@@ -96,7 +104,7 @@ const Upload: NextPage = () => {
             placeholder="글 설명을 입력해 주세요"
           />
         </div>
-        <Button text="완료" />
+        <Button text={loading ? "loading..." : "완료"} />
       </form>
     </Layout>
   );
