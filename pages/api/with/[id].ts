@@ -2,11 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "@/libs/server/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { Session } from "next-auth/src/core/types";
-
-interface sessionId extends Session {
-  id?: string;
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,7 +9,7 @@ export default async function handler(
 ) {
   const session = await getServerSession(req, res, authOptions);
   const {
-    query: { latitude, longitude },
+    query: { id },
   } = req;
 
   if (!session) {
@@ -22,28 +17,21 @@ export default async function handler(
     return;
   }
   try {
-    const parseLatitude = parseFloat(latitude.toString());
-    const parseLongitude = parseFloat(longitude.toString());
-    const posts = await client.post.findMany({
+    const post = await client.post.findUnique({
+      where: {
+        id: Number(id),
+      },
       include: {
         user: {
           select: {
+            id: true,
             name: true,
+            image: true,
           },
         },
       },
-      where: {
-        latitude: {
-          gte: parseLatitude - 0.01,
-          lte: parseLatitude + 0.01,
-        },
-        longitude: {
-          gte: parseLongitude - 0.01,
-          lte: parseLongitude + 0.01,
-        },
-      },
     });
-    res.status(200).json({ message: "success", posts });
+    res.status(200).json({ message: "success", post });
   } catch (error) {
     return res.status(500).json({ message: "Failed to create product." });
   }

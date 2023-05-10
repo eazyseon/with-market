@@ -20,7 +20,6 @@ const With: NextPage = () => {
   useEffect(() => {
     getWiths();
   }, [latitude, longitude]);
-  console.log(data);
   return (
     <Layout hasTabBar title="WITH생활">
       {loading ? (

@@ -1,17 +1,46 @@
 import type { NextPage } from "next";
 import Layout from "@/components/layout";
+import useGetData from "@/libs/client/useGetData";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import Image from "next/image";
+
+interface getPostData {
+  message?: string;
+  post: object;
+}
 
 const WithDetail: NextPage = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [getPostDetail, { loading, data }] = useGetData<getPostData>(
+    `/api/with/${id}`
+  );
+  useEffect(() => {
+    if (id) {
+      getPostDetail();
+    }
+  }, [id]);
   return (
     <Layout canGoBack>
       <div>
         <div className="flex px-4 cursor-pointer px-4 py-4  items-center space-x-3">
-          <div className="w-10 h-10 rounded-full bg-slate-300" />
-          <p className="text-sm font-medium text-gray-700">올린이</p>
+          {data && (
+            <Image
+              src={data?.post?.user.image}
+              alt="userProfile"
+              width={50}
+              height={50}
+              className="rounded-full"
+            />
+          )}
+          <p className="text-sm font-medium text-gray-700">
+            {data?.post.user.name}
+          </p>
         </div>
         <div className="mt-2 px-4 text-gray-700 border-b pb-8">
           <span className="text-orange-500 font-medium mr-2">📢</span>
-          우리동네 조용한 카페 알려주세요!
+          {data?.post.question}
         </div>
         <div>
           <div className="flex px-4 space-x-5 text-gray-700 py-3 border-b-[2px]  w-full">
