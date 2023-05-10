@@ -7,7 +7,7 @@ interface UseGetDataState {
 }
 type UseGetDataStateResult = [() => void, UseGetDataState];
 
-export default function useGetData(url: string): UseGetDataStateResult {
+export default function useGetData(url: string | null): UseGetDataStateResult {
   const [state, setSate] = useState<UseGetDataState>({
     loading: false,
     data: undefined,
