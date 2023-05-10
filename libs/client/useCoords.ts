@@ -16,7 +16,6 @@ export default function useCoords() {
     setCoords({ latitude, longitude });
   };
   useEffect(() => {
-    console.log("geolocation");
     if (!navigator.geolocation) {
       return;
     }

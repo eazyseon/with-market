@@ -4,19 +4,49 @@ import useGetData from "@/libs/client/useGetData";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { Post, User, Answer } from "@prisma/client";
+import useUploadData from "@/libs/client/useUploadData";
+import { timeForToday } from "@/libs/client/utils";
 
-interface getPostData {
-  message?: string;
-  post: object;
+interface AnswerWithUser extends Answer {
+  user: User;
+}
+
+interface PostWithUser extends Post {
+  user: User;
+  _count: {
+    answers: number;
+  };
+  answers: AnswerWithUser[];
+}
+
+interface withPostResponse {
+  message: string;
+  post: PostWithUser;
+}
+
+interface AnswerForm {
+  answer: string;
 }
 
 const WithDetail: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [getPostDetail, { loading, data }] = useGetData<getPostData>(
+  const { register, handleSubmit, reset } = useForm<Answer>();
+  const [getPostDetail, { loading, data }] = useGetData<withPostResponse>(
     `/api/with/${id}`
   );
+  const [uploadAnswer, { loading: answerLoading, data: answerData }] =
+    useUploadData(`/api/with/${router.query.id}/answer`);
+
+  const onValid = (form: AnswerForm) => {
+    if (answerLoading) return;
+    uploadAnswer(form);
+    reset();
+  };
   useEffect(() => {
+    if (loading) return;
     if (id) {
       getPostDetail();
     }
@@ -35,7 +65,7 @@ const WithDetail: NextPage = () => {
             />
           )}
           <p className="text-sm font-medium text-gray-700">
-            {data?.post.user.name}
+            {data?.post?.user.name}
           </p>
         </div>
         <div className="mt-2 px-4 text-gray-700 border-b pb-8">
@@ -77,36 +107,50 @@ const WithDetail: NextPage = () => {
                   d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 ></path>
               </svg>
-              <span>답변 1</span>
+              <span>답변 {data?.post?._count.answers}</span>
             </span>
           </div>
         </div>
-        <div className="px-4 my-5 space-y-5">
-          <div className="flex items-start space-x-3">
-            <div className="w-8 h-8 bg-slate-200 rounded-full" />
-            <div>
-              <div className="flex items-center">
-                <span className="text-sm block font-medium text-gray-700 mr-1">
-                  답변이
-                </span>
-                <span className="text-xs text-gray-500 block ">2시간 전</span>
+        {data?.post?.answers && (
+          <div className="px-4 my-5 space-y-5">
+            {data?.post?.answers?.map((answer) => (
+              <div key={answer.id} className="flex items-start space-x-3">
+                <Image
+                  src={answer.user.image}
+                  alt="userProfile"
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
+                <div>
+                  <span className="text-sm block font-medium text-gray-700">
+                    {answer.user.name}
+                  </span>
+                  <span className="text-xs text-gray-500 block ">
+                    {timeForToday(answer.createdAt)}
+                  </span>
+                  <p className="text-gray-700 mt-2">{answer.answer} </p>
+                </div>
               </div>
-              <p className="text-gray-700 mt-2">
-                오거리에 있는 수타벅스 좋아요!
-              </p>
-            </div>
+            ))}
           </div>
-        </div>
-        <form className="fixed py-2 bg-white bottom-2 inset-x-0 focus:border-primaryB-400">
+        )}
+        <form
+          className="fixed py-2 bg-white bottom-2 inset-x-0 focus:border-primaryB-400"
+          onSubmit={handleSubmit(onValid)}
+        >
           <div className="flex relative max-w-md items-center  w-full mx-auto">
             <input
+              name="answer"
+              {...register("answer", { required: true })}
+              required
               type="text"
               className="shadow-sm py-2 px-4 rounded-full w-full border-gray-300 focus:outline-none focus:outline-primaryB-400"
               placeholder="이웃과 정보를 나눠보세요 :)"
             />
             <div className="absolute flex py-2 pr-2 right-0">
               <button className="flex focus:ring-2 focus:ring-offset-2 focus:ring-primaryB-400 items-center bg-primaryB-400 rounded-full px-4 py-1 hover:bg-primaryB-500 text-md text-white">
-                &rarr;
+                {answerLoading ? "..." : "▶︎"}
               </button>
             </div>
           </div>

@@ -29,6 +29,25 @@ export default async function handler(
             image: true,
           },
         },
+        answers: {
+          select: {
+            answer: true,
+            id: true,
+            createdAt: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            answers: true,
+          },
+        },
       },
     });
     res.status(200).json({ message: "success", post });
