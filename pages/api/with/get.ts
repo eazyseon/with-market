@@ -31,6 +31,11 @@ export default async function handler(
             name: true,
           },
         },
+        _count: {
+          select: {
+            answers: true,
+          },
+        },
       },
       where: {
         latitude: {

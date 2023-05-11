@@ -6,10 +6,18 @@ import { useEffect } from "react";
 import useCoords from "@/libs/client/useCoords";
 import Link from "next/link";
 import { timeForToday } from "@/libs/client/utils";
+import { Post, User } from "@prisma/client";
+
+interface PostWithUser extends Post {
+  user: User;
+  _count: {
+    answers: number;
+  };
+}
 
 interface getWithsData {
-  message?: string;
-  posts: [];
+  message: string;
+  posts: PostWithUser[];
 }
 
 const With: NextPage = () => {
@@ -73,7 +81,7 @@ const With: NextPage = () => {
                           d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                         ></path>
                       </svg>
-                      <span>1</span>
+                      <span>{post?._count?.answers}</span>
                     </span>
                   </div>
                 </div>
