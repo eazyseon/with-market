@@ -25,6 +25,9 @@ export default async function handler(
     const parseLatitude = parseFloat(latitude.toString());
     const parseLongitude = parseFloat(longitude.toString());
     const posts = await client.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         user: {
           select: {
