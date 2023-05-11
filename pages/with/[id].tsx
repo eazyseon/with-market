@@ -112,7 +112,7 @@ const WithDetail: NextPage = () => {
           </div>
         </div>
         {data?.post?.answers && (
-          <div className="px-4 my-5 space-y-5">
+          <div className="px-4 my-5 space-y-5 h-96 overflow-auto">
             {data?.post?.answers?.map((answer) => (
               <div key={answer.id} className="flex items-start space-x-3">
                 <Image
@@ -139,7 +139,7 @@ const WithDetail: NextPage = () => {
           className="fixed py-2 bg-white bottom-2 inset-x-0 focus:border-primaryB-400"
           onSubmit={handleSubmit(onValid)}
         >
-          <div className="flex relative max-w-md items-center  w-full mx-auto">
+          <div className="flex relative max-w-md items-center w-full mx-auto">
             <input
               name="answer"
               {...register("answer", { required: true })}
