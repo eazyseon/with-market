@@ -19,7 +19,6 @@ export default async function handler(
         createdAt: "desc",
       },
     });
-    console.log(products);
     res.status(200).json({ message: "success", products });
   } catch (error) {
     return res.status(500).json({ message: "Failed to create product." });

@@ -44,7 +44,20 @@ export default async function handler(
         },
       },
     });
-    res.status(200).json({ message: "success", product, relatedProducts });
+    const isLiked = Boolean(
+      await client.fav.findFirst({
+        where: {
+          productId: product?.id,
+          userId: session?.id,
+        },
+        select: {
+          id: true,
+        },
+      })
+    );
+    res
+      .status(200)
+      .json({ message: "success", product, relatedProducts, isLiked });
   } catch (error) {
     return res.status(500).json({ message: "Failed to create product." });
   }

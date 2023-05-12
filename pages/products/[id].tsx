@@ -4,24 +4,36 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Link from "next/link";
 import useGetData from "@/libs/client/useGetData";
+import useUploadData from "@/libs/client/useUploadData";
+import { cls } from "@/libs/client/utils";
+import { Product, User } from "@prisma/client";
 
-interface getProductData {
-  message?: string;
-  product: object;
-  relatedProducts: [];
+interface productWithUser extends Product {
+  user: User;
+}
+
+interface ItemDetailResponse {
+  message: string;
+  product: productWithUser;
+  relatedProducts: Product[];
+  isLiked: boolean;
 }
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [getProductDetail, { loading, data }] = useGetData<getProductData>(
+  const [getProductDetail, { loading, data }] = useGetData<ItemDetailResponse>(
     `/api/products/${id}`
   );
+  const [toggleFav] = useUploadData(`/api/products/${id}/fav`);
   useEffect(() => {
     if (id) {
       getProductDetail();
     }
   }, [id]);
+  const onFavClick = () => {
+    toggleFav({});
+  };
   return (
     <Layout canGoBack>
       {loading ? (
@@ -47,11 +59,19 @@ const ItemDetail: NextPage = () => {
                     {data?.product?.people}
                   </span>
                 </div>
-                <button className="p-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 cursor-pointer">
+                <button
+                  onClick={onFavClick}
+                  className={cls(
+                    "p-3 rounded-md flex items-center  justify-center",
+                    data?.isLiked
+                      ? "text-primaryP-400 hover:text-primaryP-500"
+                      : "text-gray-400  hover:text-gray-500 hover:bg-gray-100"
+                  )}
+                >
                   <svg
                     className="h-6 w-6 "
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
+                    fill={data?.isLiked ? "#EBA4C6" : "none"}
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     aria-hidden="true"

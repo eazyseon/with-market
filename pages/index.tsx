@@ -4,6 +4,7 @@ import FloatingButton from "@/components/floating-button";
 import Item from "@/components/item";
 import { useEffect } from "react";
 import useGetData from "@/libs/client/useGetData";
+import { useSession } from "next-auth/react";
 
 interface getProductData {
   message?: string;
@@ -11,6 +12,8 @@ interface getProductData {
 }
 
 const Home: NextPage = () => {
+  const { data: session } = useSession();
+  console.log(session);
   const [getProducts, { loading, data }] =
     useGetData<getProductData>("/api/products/get");
   useEffect(() => {
