@@ -13,7 +13,6 @@ interface getProductData {
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
-  console.log(session);
   const [getProducts, { loading, data }] =
     useGetData<getProductData>("/api/products/get");
   useEffect(() => {

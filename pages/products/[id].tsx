@@ -7,6 +7,7 @@ import useGetData from "@/libs/client/useGetData";
 import useUploadData from "@/libs/client/useUploadData";
 import { cls } from "@/libs/client/utils";
 import { Product, User } from "@prisma/client";
+import useSWR from "swr";
 
 interface productWithUser extends Product {
   user: User;
@@ -22,21 +23,18 @@ interface ItemDetailResponse {
 const ItemDetail: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [getProductDetail, { loading, data }] = useGetData<ItemDetailResponse>(
-    `/api/products/${id}`
+  const { data, mutate } = useSWR<ItemDetailResponse>(
+    router.query.id ? `/api/products/${router.query.id}` : null
   );
   const [toggleFav] = useUploadData(`/api/products/${id}/fav`);
-  useEffect(() => {
-    if (id) {
-      getProductDetail();
-    }
-  }, [id]);
   const onFavClick = () => {
     toggleFav({});
+    if (!data) return;
+    mutate({ ...data, isLiked: !data.isLiked }, false);
   };
   return (
     <Layout canGoBack>
-      {loading ? (
+      {!data ? (
         <span>로딩중...</span>
       ) : (
         <div className="px-4 py-10">
