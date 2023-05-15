@@ -24,6 +24,7 @@ export default async function handler(
             favs: true,
           },
         },
+        favs: { select: { userId: true } },
       },
     });
     res.status(200).json({ message: "success", products });

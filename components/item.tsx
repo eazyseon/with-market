@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { cls } from "@/libs/client/utils";
 
 interface ItemProps {
   name: string;
@@ -7,6 +8,7 @@ interface ItemProps {
   people: number;
   id: number;
   hearts: number;
+  includeUserId: Boolean;
 }
 
 export default function Item({
@@ -16,6 +18,7 @@ export default function Item({
   people,
   id,
   hearts,
+  includeUserId,
 }: ItemProps) {
   return (
     <Link
@@ -35,8 +38,8 @@ export default function Item({
           <div className="flex space-x-0.5 items-center text-sm text-gray-600">
             <svg
               className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
+              fill={includeUserId ? "#EBA4C6" : "none"}
+              stroke={includeUserId ? "#EBA4C6" : "none"}
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
