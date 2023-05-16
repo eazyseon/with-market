@@ -25,7 +25,7 @@ const Home: NextPage = () => {
             people={product.people}
             id={product.id}
             hearts={product._count.favs}
-            includeUserId={product.favs.some((el) => el.id === session.userId)}
+            includeUserId={product.favs.some((el) => el.userId === session?.id)}
           />
         ))}
         <FloatingButton href="/products/upload">

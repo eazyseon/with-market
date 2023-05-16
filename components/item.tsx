@@ -39,7 +39,7 @@ export default function Item({
             <svg
               className="w-4 h-4"
               fill={includeUserId ? "#EBA4C6" : "none"}
-              stroke={includeUserId ? "#EBA4C6" : "none"}
+              stroke={includeUserId ? "#EBA4C6" : "currentColor"}
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
