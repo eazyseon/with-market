@@ -46,11 +46,23 @@ export default async function handler(
         _count: {
           select: {
             answers: true,
+            agrees: true,
           },
         },
       },
     });
-    res.status(200).json({ message: "success", post });
+    const isAgree = Boolean(
+      await client.agree.findFirst({
+        where: {
+          postId: Number(id),
+          userId: (session as sessionId).id,
+        },
+        select: {
+          id: true,
+        },
+      })
+    );
+    res.status(200).json({ message: "success", post, isAgree });
   } catch (error) {
     return res.status(500).json({ message: "Failed to create product." });
   }

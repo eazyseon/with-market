@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
 import Layout from "@/components/layout";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import Link from "next/link";
-import useGetData from "@/libs/client/useGetData";
 import useUploadData from "@/libs/client/useUploadData";
 import { cls } from "@/libs/client/utils";
 import { Product, User } from "@prisma/client";

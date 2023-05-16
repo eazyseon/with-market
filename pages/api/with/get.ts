@@ -37,6 +37,7 @@ export default async function handler(
         _count: {
           select: {
             answers: true,
+            agrees: true,
           },
         },
       },
