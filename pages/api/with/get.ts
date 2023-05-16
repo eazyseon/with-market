@@ -40,6 +40,7 @@ export default async function handler(
             agrees: true,
           },
         },
+        agrees: { select: { userId: true } },
       },
       where: {
         latitude: {

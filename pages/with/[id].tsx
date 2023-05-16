@@ -95,7 +95,7 @@ const WithDetail: NextPage = () => {
               onClick={onAgreeClick}
               className={cls(
                 "flex space-x-2 items-center text-sm ",
-                data?.isAgree ? "text-emerald-600" : ""
+                data?.isAgree ? "text-green-500" : ""
               )}
             >
               <svg

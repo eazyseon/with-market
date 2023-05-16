@@ -6,6 +6,7 @@ import Link from "next/link";
 import { timeForToday } from "@/libs/client/utils";
 import { Post, User } from "@prisma/client";
 import useSWR from "swr";
+import { useSession } from "next-auth/react";
 
 interface PostWithUser extends Post {
   user: User;
@@ -21,6 +22,7 @@ interface getWithsData {
 }
 
 const With: NextPage = () => {
+  const { data: session } = useSession();
   const { latitude, longitude } = useCoords();
   const { data } = useSWR<getWithsData>(
     latitude && longitude
@@ -47,10 +49,20 @@ const With: NextPage = () => {
                   <span className="flex space-x-2 items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
+                      fill={
+                        post.agrees.some((el) => el.userId === session?.id)
+                          ? "#22c55e"
+                          : "none"
+                      }
+                      // fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
-                      stroke="currentColor"
+                      // stroke="currentColor"
+                      stroke={
+                        post.agrees.some((el) => el.userId === session?.id)
+                          ? "none"
+                          : "currentColor"
+                      }
                       className="w-4 h-4"
                     >
                       <path
