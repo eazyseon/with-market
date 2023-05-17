@@ -1,7 +1,18 @@
 import { NextPage } from "next";
 import Layout from "@/components/layout";
+import { useState } from "react";
+import useSWR from "swr";
+import Item from "@/components/item";
+import { useSession } from "next-auth/react";
 
 const Search: NextPage = () => {
+  const [keyWord, setKeyWord] = useState<string>("");
+  const { data: session } = useSession();
+  const { data } = useSWR(!!keyWord ? `/api/search?keyword=${keyWord}` : null);
+  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyWord(e.target.value);
+  };
+
   return (
     <Layout title="검색" hasTabBar>
       <div className="px-4">
@@ -21,7 +32,8 @@ const Search: NextPage = () => {
             />
           </svg>
           <input
-            id="search"
+            value={keyWord}
+            onChange={handleSubmit}
             className="max-w-sm appearance-none pl-7 w-full px-3 py-2 border-b-2 placeholder-gray-400 focus:outline-none focus:border-primaryB-400 my-8"
             type="text"
             placeholder="검색어를 입력해주세요"
@@ -39,6 +51,20 @@ const Search: NextPage = () => {
             </div>
           ))}
         </div>
+      </div>
+      <div className="flex flex-col space-y-5 divide-y">
+        {data?.products?.map((product) => (
+          <Item
+            key={product.id}
+            name={product.name}
+            place={product.place}
+            price={product.price}
+            people={product.people}
+            id={product.id}
+            hearts={product._count?.favs}
+            includeUserId={product.favs.some((el) => el.userId === session?.id)}
+          />
+        ))}
       </div>
     </Layout>
   );
