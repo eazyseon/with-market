@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   const { data: session } = useSession();
   const { data } = useSWR<getProductData>("/api/products/get");
   return (
-    <Layout title="HOME" hasTabBar>
+    <Layout image="/logo.jpg" hasTabBar>
       <div className="flex flex-col space-y-5 divide-y">
         {data?.products?.map((product) => (
           <Item

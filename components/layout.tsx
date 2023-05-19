@@ -2,9 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { cls } from "@/libs/client/utils";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 interface LayoutProps {
   title?: string;
+  image?: string;
   canGoBack?: boolean;
   hasTabBar?: boolean;
   children: React.ReactNode;
@@ -12,6 +14,7 @@ interface LayoutProps {
 
 export default function Layout({
   title,
+  image,
   canGoBack,
   hasTabBar,
   children,
@@ -24,8 +27,8 @@ export default function Layout({
     <div>
       <div
         className={cls(
-          canGoBack ? "" : "justify-center",
-          "bg-white w-full max-w-xl text-lg px-10 font-medium py-3 fixed text-gray-800 border-b top-0  flex items-center"
+          image ? "py-1" : "py-3",
+          "bg-white w-full max-w-xl text-lg px-10 font-medium fixed text-gray-800 border-b top-0  flex items-center"
         )}
       >
         {canGoBack ? (
@@ -48,6 +51,15 @@ export default function Layout({
         ) : null}
         {title ? (
           <span className="mx-auto text-primaryB-400">{title}</span>
+        ) : null}
+        {image ? (
+          <Image
+            src={image}
+            alt="logo"
+            width={80}
+            height={20}
+            className="mx-auto"
+          />
         ) : null}
       </div>
       <div className={cls("pt-12", hasTabBar ? "pb-24" : "")}>{children}</div>
