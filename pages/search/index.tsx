@@ -4,11 +4,30 @@ import { useState } from "react";
 import useSWR from "swr";
 import Item from "@/components/item";
 import { useSession } from "next-auth/react";
+import useDebounce from "@/libs/client/useDebounce";
+import { cls } from "@/libs/client/utils";
+
+const recommandKeywords = [
+  { title: "맥주", value: "맥주" },
+  { title: "약과", value: "약과" },
+];
+
+interface getProductData {
+  message?: string;
+  products: [];
+}
 
 const Search: NextPage = () => {
   const [keyWord, setKeyWord] = useState<string>("");
   const { data: session } = useSession();
-  const { data } = useSWR(!!keyWord ? `/api/search?keyword=${keyWord}` : null);
+  const debouncedKeyword = useDebounce<string>(keyWord);
+
+  const { data } = useSWR<getProductData>(
+    !!debouncedKeyword ? `/api/search?keyword=${debouncedKeyword}` : null,
+    {
+      revalidateOnFocus: false,
+    }
+  );
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyWord(e.target.value);
   };
@@ -41,11 +60,17 @@ const Search: NextPage = () => {
         </div>
         <h3 className="text-sm font-medium text-gray-900 mb-5">추천 검색어</h3>
         <div className="flex">
-          {[1, 1, 1, 1].map((_, i) => (
+          {recommandKeywords.map((word, i) => (
             <div key={i} className="flex cursor-pointer justify-between">
               <div className="flex mr-2">
-                <div className="px-3 rounded-full border border-2 border-gray-200">
-                  <span className="text-s text-gray-500">캔맥주</span>
+                <div
+                  className={cls(
+                    "px-3 rounded-full border border-2 border-gray-200 ",
+                    keyWord === word.value ? "border-primaryP-400" : ""
+                  )}
+                  onClick={() => setKeyWord(word.value)}
+                >
+                  <span className="text-s text-gray-500">{word.title}</span>
                 </div>
               </div>
             </div>
