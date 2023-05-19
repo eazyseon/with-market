@@ -1,36 +1,44 @@
 import type { NextPage } from "next";
 import Layout from "@/components/layout";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 
 const MyWith: NextPage = () => {
   const { data: session } = useSession();
   return (
     <Layout hasTabBar title="나의 WITH">
       <div className="px-4">
-        <div className="flex items-center mt-4 space-x-3">
-          <div className="w-16 h-16 bg-slate-500 rounded-full" />
-          <div className="flex items-center">
-            {session ? (
-              <div>
-                <span className="font-medium text-lg text-gray-500 mr-2">
-                  {session.user.name}님 반가워요 😁
-                </span>
-                <span
-                  onClick={() => signOut()}
-                  className="text-sm text-gray-500 cursor-pointer"
-                >
-                  로그아웃
-                </span>
-              </div>
-            ) : (
+        <div className="flex items-center mt-6 space-x-3">
+          {session ? (
+            <div className="flex items-center">
+              <Image
+                src={session?.user?.image}
+                alt="userProfile"
+                width={64}
+                height={64}
+                className="rounded-full mr-3"
+              />
+              <span className="font-medium text-lg text-gray-500 mr-2">
+                {session.user.name}님 반가워요 😁
+              </span>
+              <span
+                onClick={() => signOut()}
+                className="text-sm text-gray-500 cursor-pointer"
+              >
+                로그아웃
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <div className="w-16 h-16 bg-slate-500 rounded-full mr-4" />
               <span
                 onClick={() => signIn("google")}
                 className="font-medium text-lg text-gray-500 cursor-pointer"
               >
                 로그인 해주세요 😁
               </span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
         <div className="mt-10 flex justify-around">
           <div className="flex flex-col items-center">
