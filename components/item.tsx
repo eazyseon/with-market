@@ -6,6 +6,7 @@ interface ItemProps {
   place: string;
   price: number;
   people: number;
+  image: string;
   id: number;
   hearts: number;
   includeUserId: Boolean;
@@ -16,6 +17,7 @@ export default function Item({
   place,
   price,
   people,
+  image,
   id,
   hearts,
   includeUserId,
@@ -26,7 +28,11 @@ export default function Item({
       className="flex px-4 pt-5 cursor-pointer justify-between"
     >
       <div className="flex space-x-4">
-        <div className="w-20 h-20 bg-gray-400 rounded-md" />
+        {/*<div className="w-20 h-20 bg-gray-400 rounded-md" />*/}
+        <img
+          src={`https://imagedelivery.net/KzdrdSk01564feEO2hTHug/${image}/public`}
+          className="w-20 h-20 rounded-md"
+        />
         <div className="pt-2 flex flex-col">
           <h3 className="text-sm font-medium text-gray-900">{name}</h3>
           <span className="text-xs text-gray-500">{place}</span>

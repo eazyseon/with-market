@@ -23,6 +23,7 @@ const Home: NextPage = () => {
             place={product.place}
             price={product.price}
             people={product.people}
+            image={product.image}
             id={product.id}
             hearts={product._count.favs}
             includeUserId={product.favs.some((el) => el.userId === session?.id)}

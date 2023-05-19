@@ -19,10 +19,10 @@ export default async function handler(
     return;
   }
   try {
-    const { name, place, price, people, description } = req.body;
+    const { name, place, price, people, description, photoId } = req.body;
     const newProduct = await client.product.create({
       data: {
-        image: "",
+        image: photoId,
         name,
         price: Number(price),
         place,

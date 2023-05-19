@@ -37,7 +37,11 @@ const ItemDetail: NextPage = () => {
       ) : (
         <div className="px-4 py-10">
           <div className="mb-8">
-            <div className="h-96 bg-slate-300" />
+            {/*<div className="h-96 bg-slate-300" />*/}
+            <img
+              src={`https://imagedelivery.net/KzdrdSk01564feEO2hTHug/${data?.product?.image}/public`}
+              className="h-96"
+            />
             <div className="flex justify-between py-3 border-t border-b items-center space-x-3">
               <div className="flex items-center">
                 <img
@@ -103,7 +107,10 @@ const ItemDetail: NextPage = () => {
               <div className=" mt-6 grid grid-cols-2 gap-4">
                 {data?.relatedProducts?.map((product) => (
                   <Link href={`/products/${product.id}`} key={product.id}>
-                    <div className="h-56 w-full mb-4 bg-slate-300" />
+                    <img
+                      src={`https://imagedelivery.net/KzdrdSk01564feEO2hTHug/${product.image}/public`}
+                      className="h-56 w-full mb-4"
+                    />
                     <h3 className="text-gray-700 -mb-1">{product.name}</h3>
                     <span className="text-sm font-medium text-gray-900">
                       {product.price}
