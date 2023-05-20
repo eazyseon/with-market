@@ -4,10 +4,11 @@ import FloatingButton from "@/components/floating-button";
 import Item from "@/components/item";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
+import { Product } from "@prisma/client";
 
 interface getProductData {
   message?: string;
-  products: [];
+  products: Product[];
 }
 
 const Home: NextPage = () => {
