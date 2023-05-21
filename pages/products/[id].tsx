@@ -4,21 +4,29 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import useUploadData from "@/libs/client/useUploadData";
 import { cls } from "@/libs/client/utils";
-import { Product, User } from "@prisma/client";
+import { Product, User, Member } from "@prisma/client";
 import useSWR from "swr";
+import Button from "@/components/button";
+import { useSession } from "next-auth/react";
 
-interface productWithUser extends Product {
+interface productWithUserAndMember extends Product {
   user: User;
+  members: Member[];
+  _count: {
+    members: number;
+  };
 }
 
 interface ItemDetailResponse {
   message: string;
-  product: productWithUser;
+  product: productWithUserAndMember;
   relatedProducts: Product[];
   isLiked: boolean;
+  isFull: boolean;
 }
 
 const ItemDetail: NextPage = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
   const { data, mutate } = useSWR<ItemDetailResponse>(
@@ -30,6 +38,64 @@ const ItemDetail: NextPage = () => {
     if (!data) return;
     mutate({ ...data, isLiked: !data.isLiked }, false);
   };
+  const [joinWith] = useUploadData(`/api/products/${id}/member`);
+  const onClickWithYouBtn = () => {
+    joinWith({});
+    const alreadyExist = data.product.members.some(
+      (member) => member.user.id === session.id
+    );
+    if (!data) return;
+    if (alreadyExist) {
+      mutate(
+        {
+          ...data,
+          product: {
+            ...data.product,
+            members: [
+              ...data.product.members.filter(
+                (member) => member.user.id !== session.id
+              ),
+            ],
+            _count: {
+              members: data.product._count.members - 1,
+            },
+          },
+          isFull:
+            data.product.people === data.product._count.members - 1
+              ? true
+              : false,
+        },
+        false
+      );
+    } else {
+      mutate(
+        {
+          ...data,
+          product: {
+            ...data.product,
+            members: [
+              ...data.product.members,
+              {
+                user: {
+                  id: session.id,
+                  image: session.user.image,
+                  name: session.user.name,
+                },
+              },
+            ],
+            _count: {
+              members: data.product._count.members + 1,
+            },
+          },
+          isFull:
+            data.product.people === data.product._count.members + 2
+              ? true
+              : false,
+        },
+        false
+      );
+    }
+  };
   return (
     <Layout canGoBack>
       {!data ? (
@@ -37,7 +103,6 @@ const ItemDetail: NextPage = () => {
       ) : (
         <div className="px-4 py-10">
           <div className="mb-8">
-            {/*<div className="h-96 bg-slate-300" />*/}
             <img
               src={`https://imagedelivery.net/KzdrdSk01564feEO2hTHug/${data?.product?.image}/public`}
               className="h-96"
@@ -56,9 +121,26 @@ const ItemDetail: NextPage = () => {
                 <div className="p-3 flex items-center space-x-1.5">
                   <span className="text-gray-600 text-lg">WITH</span>
                   <span className="text-primaryB-400 text-lg">
-                    {data?.product?.people}
+                    {data?.product?._count.members + 1}/{data?.product?.people}
                   </span>
                 </div>
+              </div>
+            </div>
+            <div className="mt-5">
+              <h1 className="text-3xl font-bold text-gray-900">
+                {data?.product?.name}
+              </h1>
+              <span className="text-md block mt-3 text-gray-900">
+                {data?.product?.place}
+              </span>
+              <span className="text-2xl block mt-3 text-gray-900">
+                {data?.product?.price}원
+              </span>
+              <p className=" my-6 text-gray-700">
+                {data?.product?.description}
+              </p>
+              <div className="flex items-center justify-between space-x-2">
+                <Button text="WITH YOU" onClick={onClickWithYouBtn} />
                 <button
                   onClick={onFavClick}
                   className={cls(
@@ -85,20 +167,31 @@ const ItemDetail: NextPage = () => {
                   </svg>
                 </button>
               </div>
-            </div>
-            <div className="mt-5">
-              <h1 className="text-3xl font-bold text-gray-900">
-                {data?.product?.name}
-              </h1>
-              <span className="text-md block mt-3 text-gray-900">
-                {data?.product?.place}
-              </span>
-              <span className="text-2xl block mt-3 text-gray-900">
-                {data?.product?.price}원
-              </span>
-              <p className=" my-6 text-gray-700">
-                {data?.product?.description}
-              </p>
+              <div className="flex flex-col space-y-3">
+                <span className="text-gray-600 text-lg font-bold mt-2">
+                  참여중인 멤버
+                </span>
+                <div className="flex items-center">
+                  <img
+                    src={data?.product?.user.image}
+                    className="w-12 h-12 rounded-full bg-slate-300 mr-2"
+                  />
+                  <p className="text-sm font-medium text-gray-700">
+                    {data?.product?.user.name}
+                  </p>
+                </div>
+                {data.product.members.map((member) => (
+                  <div key={member.user.id} className="flex items-center">
+                    <img
+                      src={member.user.image}
+                      className="w-12 h-12 rounded-full bg-slate-300 mr-2"
+                    />
+                    <p className="text-sm font-medium text-gray-700">
+                      {member.user.name}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           {data?.relatedProducts?.length ? (

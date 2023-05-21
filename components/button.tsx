@@ -19,8 +19,9 @@ const Button = ({ size = "sm", text, onClick }: ButtonProps) => {
   return (
     <button
       className={cls(
-        `${btnSize} mt-5 w-full bg-primaryB-400 hover:bg-primaryB-500 text-white px-4 border border-transparent rounded-md shadow-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-primaryB-400 focus:border-primaryB-400`
+        `${btnSize} w-full bg-primaryB-400 hover:bg-primaryB-500 text-white px-4 border border-transparent rounded-md shadow-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-primaryB-400 focus:border-primaryB-400`
       )}
+      onClick={onClick}
     >
       {text}
     </button>

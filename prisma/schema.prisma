@@ -49,6 +49,7 @@ model User {
   answers       Answer[]
   fav           Fav[]
   agrees        Agree[]
+  members       Member[]
 }
 
 model VerificationToken {
@@ -72,6 +73,7 @@ model Product {
   people      Int
   description String   @db.MediumText
   favs        Fav[]
+  members     Member[]
 }
 
 model Post {
@@ -116,4 +118,14 @@ model Agree {
   userId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
+}
+
+model Member {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId    Int
 }

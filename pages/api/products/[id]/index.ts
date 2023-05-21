@@ -29,8 +29,25 @@ export default async function handler(
             image: true,
           },
         },
+        members: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            members: true,
+          },
+        },
       },
     });
+
     const terms = product?.name
       .split(" ")
       .map((word: any) => ({ name: { contains: word } }));
@@ -55,10 +72,16 @@ export default async function handler(
         },
       })
     );
+    const memberCount = await client.member.count({
+      where: {
+        productId: product?.id,
+      },
+    });
+    const isFull = memberCount + 1 === product.people ? true : false;
     res
       .status(200)
-      .json({ message: "success", product, relatedProducts, isLiked });
+      .json({ message: "success", product, relatedProducts, isLiked, isFull });
   } catch (error) {
-    return res.status(500).json({ message: "Failed to create product." });
+    return res.status(500).json({ message: "Failed to get product." });
   }
 }

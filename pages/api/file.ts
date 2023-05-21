@@ -31,8 +31,6 @@ export default async function handler(
         }
       )
     ).json();
-    console.log(response);
-
     res.status(200).json({ message: "success", ...response.result });
   } catch (error) {
     return res.status(500).json({ message: "Failed to create product." });

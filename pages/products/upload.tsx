@@ -44,8 +44,14 @@ const Upload: NextPage = () => {
       const {
         result: { id },
       } = await (await fetch(uploadURL, { method: "POST", body: form })).json();
-      console.log(id);
-      uploadProduct({ name, place, price, people, description, photoId: id });
+      uploadProduct({
+        name,
+        place,
+        price,
+        people,
+        description,
+        photoId: id,
+      });
     }
   };
   useEffect(() => {
