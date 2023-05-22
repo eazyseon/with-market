@@ -2,9 +2,16 @@ import type { NextPage } from "next";
 import Layout from "@/components/layout";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import useSWR from "swr";
+import { useState } from "react";
+import { cls } from "@/libs/client/utils";
+import Item from "@/components/item";
 
 const MyWith: NextPage = () => {
+  const [kind, setKind] = useState("withme");
   const { data: session } = useSession();
+  const { data } = useSWR(`/api/mypage/${kind}`);
+
   return (
     <Layout hasTabBar title="나의 WITH">
       <div className="px-4">
@@ -19,7 +26,7 @@ const MyWith: NextPage = () => {
                 className="rounded-full mr-3"
               />
               <span className="font-medium text-lg text-gray-500 mr-2">
-                {session.user.name}님 반가워요 😁
+                {session?.user?.name}님 반가워요 😁
               </span>
               <span
                 onClick={() => signOut()}
@@ -41,8 +48,16 @@ const MyWith: NextPage = () => {
           )}
         </div>
         <div className="mt-10 flex justify-around">
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 text-white bg-primaryB-400 rounded-full flex items-center justify-center">
+          <div
+            onClick={() => setKind("withme")}
+            className="flex flex-col items-center"
+          >
+            <div
+              className={cls(
+                "w-14 h-14 text-white rounded-full flex items-center justify-center",
+                kind === "withme" ? "bg-primaryB-400" : "bg-gray-400"
+              )}
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -58,12 +73,25 @@ const MyWith: NextPage = () => {
                 ></path>
               </svg>
             </div>
-            <span className="text-sm mt-2 font-medium text-primaryB-400">
+            <span
+              className={cls(
+                "text-sm mt-2 font-medium",
+                kind === "withme" ? "text-primaryB-400" : "text-gray-400"
+              )}
+            >
               WITH ME
             </span>
           </div>
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 text-white bg-gray-400 rounded-full flex items-center justify-center">
+          <div
+            onClick={() => setKind("withyou")}
+            className="flex flex-col items-center"
+          >
+            <div
+              className={cls(
+                "w-14 h-14 text-white rounded-full flex items-center justify-center",
+                kind === "withyou" ? "bg-primaryB-400" : "bg-gray-400"
+              )}
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -79,12 +107,25 @@ const MyWith: NextPage = () => {
                 ></path>
               </svg>
             </div>
-            <span className="text-sm mt-2 font-medium text-gray-400">
+            <span
+              className={cls(
+                "text-sm mt-2 font-medium",
+                kind === "withyou" ? "text-primaryB-400" : "text-gray-400"
+              )}
+            >
               WITH YOU
             </span>
           </div>
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 text-white bg-gray-400 rounded-full flex items-center justify-center">
+          <div
+            onClick={() => setKind("favs")}
+            className="flex flex-col items-center"
+          >
+            <div
+              className={cls(
+                "w-14 h-14 text-white rounded-full flex items-center justify-center",
+                kind === "favs" ? "bg-primaryB-400" : "bg-gray-400"
+              )}
+            >
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -100,10 +141,48 @@ const MyWith: NextPage = () => {
                 ></path>
               </svg>
             </div>
-            <span className="text-sm mt-2 font-medium text-gray-400">
+            <span
+              className={cls(
+                "text-sm mt-2 font-medium",
+                kind === "favs" ? "text-primaryB-400" : "text-gray-400"
+              )}
+            >
               관심목록
             </span>
           </div>
+        </div>
+        <div className="flex flex-col space-y-5 divide-y">
+          {kind === "withme"
+            ? data?.products?.map((product) => (
+                <Item
+                  key={product.id}
+                  name={product.name}
+                  place={product.place}
+                  price={product.price}
+                  people={product.people}
+                  image={product.image}
+                  id={product.id}
+                  hearts={product._count.favs}
+                  includeUserId={product.favs.some(
+                    (el) => el.userId === session?.id
+                  )}
+                />
+              ))
+            : data?.products?.map((_) => (
+                <Item
+                  key={_.product?.id}
+                  name={_.product?.name}
+                  place={_.product.place}
+                  price={_.product.price}
+                  people={_.product.people}
+                  image={_.product.image}
+                  id={_.product.id}
+                  hearts={_.product._count.favs}
+                  includeUserId={_.product.favs.some(
+                    (el) => el.userId === session?.id
+                  )}
+                />
+              ))}
         </div>
       </div>
     </Layout>
