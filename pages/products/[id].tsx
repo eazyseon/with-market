@@ -107,25 +107,6 @@ const ItemDetail: NextPage = () => {
               src={`https://imagedelivery.net/KzdrdSk01564feEO2hTHug/${data?.product?.image}/public`}
               className="h-96"
             />
-            <div className="flex justify-between py-3 border-t border-b items-center space-x-3">
-              <div className="flex items-center">
-                <img
-                  src={data?.product?.user.image}
-                  className="w-12 h-12 rounded-full bg-slate-300 mr-2"
-                />
-                <p className="text-sm font-medium text-gray-700">
-                  {data?.product?.user.name}
-                </p>
-              </div>
-              <div className="flex items-center">
-                <div className="p-3 flex items-center space-x-1.5">
-                  <span className="text-gray-600 text-lg">WITH</span>
-                  <span className="text-primaryB-400 text-lg">
-                    {data?.product?._count.members + 1}/{data?.product?.people}
-                  </span>
-                </div>
-              </div>
-            </div>
             <div className="mt-5">
               <h1 className="text-3xl font-bold text-gray-900">
                 {data?.product?.name}
@@ -168,9 +149,17 @@ const ItemDetail: NextPage = () => {
                 </button>
               </div>
               <div className="flex flex-col space-y-3">
-                <span className="text-gray-600 text-lg font-bold mt-2">
-                  참여중인 멤버
-                </span>
+                <div className="flex items-center mt-4">
+                  <span className="text-gray-600 text-lg font-bold  mr-4">
+                    참여중인 멤버
+                  </span>
+                  <span className="text-primaryB-400 text-lg">
+                    {data?.product?._count.members + 1}
+                  </span>
+                  <span className="text-gray-600 text-lg">
+                    /{data?.product?.people}
+                  </span>
+                </div>
                 <div className="flex items-center">
                   <img
                     src={data?.product?.user.image}
@@ -179,6 +168,22 @@ const ItemDetail: NextPage = () => {
                   <p className="text-sm font-medium text-gray-700">
                     {data?.product?.user.name}
                   </p>
+                  <div className="w-5 h-5 bg-yellow-300 rounded-full flex items-center justify-center mx-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="white"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="white"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                      />
+                    </svg>
+                  </div>
                 </div>
                 {data.product.members.map((member) => (
                   <div key={member.user.id} className="flex items-center">
