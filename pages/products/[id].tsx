@@ -128,7 +128,7 @@ const ItemDetail: NextPage = () => {
                 <Button
                   text="WITH YOU"
                   onClick={onClickWithYouBtn}
-                  disabled={data.product.userId === session?.id ? true : false}
+                  disabled={data.product.userId === session?.id}
                 />
                 <button
                   onClick={onFavClick}
