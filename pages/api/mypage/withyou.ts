@@ -18,7 +18,7 @@ export default async function handler(
     return;
   }
   try {
-    const products = await client.member.findMany({
+    const productData = await client.member.findMany({
       where: {
         userId: (session as sessionId).id,
       },
@@ -29,6 +29,7 @@ export default async function handler(
             _count: {
               select: {
                 favs: true,
+                members: true,
               },
             },
           },
@@ -38,6 +39,15 @@ export default async function handler(
         createdAt: "desc",
       },
     });
+    const products = productData.map((data) => {
+      const memberCount = 1 + data.product._count.members;
+      const isFull = data.product.people <= memberCount;
+      return {
+        ...data.product,
+        isFull,
+      };
+    });
+
     res.status(200).json({ message: "success", products });
   } catch (error) {
     return res.status(500).json({ message: "Failed to create product." });

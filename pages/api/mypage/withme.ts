@@ -18,7 +18,7 @@ export default async function handler(
     return;
   }
   try {
-    const products = await client.product.findMany({
+    const productData = await client.product.findMany({
       where: {
         userId: (session as sessionId).id,
       },
@@ -27,12 +27,21 @@ export default async function handler(
         _count: {
           select: {
             favs: true,
+            members: true,
           },
         },
       },
       orderBy: {
         createdAt: "desc",
       },
+    });
+    const products = productData.map((data: any) => {
+      const memberCount = 1 + data._count.members;
+      const isFull = data.people <= memberCount;
+      return {
+        ...data,
+        isFull,
+      };
     });
     res.status(200).json({ message: "success", products });
   } catch (error) {

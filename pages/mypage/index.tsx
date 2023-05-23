@@ -11,7 +11,6 @@ const MyWith: NextPage = () => {
   const [kind, setKind] = useState("withme");
   const { data: session } = useSession();
   const { data } = useSWR(`/api/mypage/${kind}`);
-
   return (
     <Layout hasTabBar title="나의 WITH">
       <div className="px-4">
@@ -152,37 +151,24 @@ const MyWith: NextPage = () => {
           </div>
         </div>
         <div className="flex flex-col space-y-5 divide-y">
-          {kind === "withme"
-            ? data?.products?.map((product) => (
-                <Item
-                  key={product.id}
-                  name={product.name}
-                  place={product.place}
-                  price={product.price}
-                  people={product.people}
-                  image={product.image}
-                  id={product.id}
-                  hearts={product._count.favs}
-                  includeUserId={product.favs.some(
-                    (el) => el.userId === session?.id
-                  )}
-                />
-              ))
-            : data?.products?.map((_) => (
-                <Item
-                  key={_.product?.id}
-                  name={_.product?.name}
-                  place={_.product.place}
-                  price={_.product.price}
-                  people={_.product.people}
-                  image={_.product.image}
-                  id={_.product.id}
-                  hearts={_.product._count.favs}
-                  includeUserId={_.product.favs.some(
-                    (el) => el.userId === session?.id
-                  )}
-                />
-              ))}
+          {data &&
+            data?.products?.map((product) => (
+              <Item
+                key={product.id}
+                name={product.name}
+                place={product.place}
+                price={product.price}
+                people={product.people}
+                image={product.image}
+                id={product.id}
+                hearts={product._count.favs}
+                member={product._count.members}
+                isFull={product.isFull}
+                includeUserId={product.favs.some(
+                  (el) => el.userId === session?.id
+                )}
+              />
+            ))}
         </div>
       </div>
     </Layout>

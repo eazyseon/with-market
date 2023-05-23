@@ -4,11 +4,20 @@ import FloatingButton from "@/components/floating-button";
 import Item from "@/components/item";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
-import { Product } from "@prisma/client";
+import { Product, Fav } from "@prisma/client";
+
+interface productWithFav extends Product {
+  favs: Fav;
+  _count: {
+    favs: number;
+    members: number;
+  };
+  isFull: boolean;
+}
 
 interface getProductData {
   message?: string;
-  products: Product[];
+  products: productWithFav[];
 }
 
 const Home: NextPage = () => {
@@ -19,14 +28,16 @@ const Home: NextPage = () => {
       <div className="flex flex-col space-y-5 divide-y">
         {data?.products?.map((product) => (
           <Item
+            id={product.id}
             key={product.id}
             name={product.name}
             place={product.place}
             price={product.price}
             people={product.people}
             image={product.image}
-            id={product.id}
             hearts={product._count.favs}
+            member={product._count.members}
+            isFull={product.isFull}
             includeUserId={product.favs.some((el) => el.userId === session?.id)}
           />
         ))}

@@ -18,7 +18,7 @@ export default async function handler(
     return;
   }
   try {
-    const products = await client.fav.findMany({
+    const productData = await client.fav.findMany({
       where: {
         userId: (session as sessionId).id,
       },
@@ -29,11 +29,20 @@ export default async function handler(
             _count: {
               select: {
                 favs: true,
+                members: true,
               },
             },
           },
         },
       },
+    });
+    const products = productData.map((data) => {
+      const memberCount = 1 + data.product._count.members;
+      const isFull = data.product.people <= memberCount;
+      return {
+        ...data.product,
+        isFull,
+      };
     });
     res.status(200).json({ message: "success", products });
   } catch (error) {
