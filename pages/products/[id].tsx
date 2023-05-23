@@ -40,11 +40,15 @@ const ItemDetail: NextPage = () => {
   };
   const [joinWith] = useUploadData(`/api/products/${id}/member`);
   const onClickWithYouBtn = () => {
-    joinWith({});
+    if (!data) return;
     const alreadyExist = data.product.members.some(
       (member) => member.user.id === session.id
     );
-    if (!data) return;
+    if (!alreadyExist && data.isFull) {
+      alert("with 멤버가  다 모였어요");
+      return;
+    }
+    joinWith({});
     if (alreadyExist) {
       mutate(
         {
@@ -121,7 +125,11 @@ const ItemDetail: NextPage = () => {
                 {data?.product?.description}
               </p>
               <div className="flex items-center justify-between space-x-2">
-                <Button text="WITH YOU" onClick={onClickWithYouBtn} />
+                <Button
+                  text="WITH YOU"
+                  onClick={onClickWithYouBtn}
+                  disabled={data.product.userId === session?.id ? true : false}
+                />
                 <button
                   onClick={onFavClick}
                   className={cls(
