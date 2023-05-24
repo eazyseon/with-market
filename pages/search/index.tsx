@@ -6,14 +6,24 @@ import Item from "@/components/item";
 import { useSession } from "next-auth/react";
 import useDebounce from "@/libs/client/useDebounce";
 import { cls } from "@/libs/client/utils";
+import { Fav, Product } from "@prisma/client";
 
 const recommandKeywords = [
   { title: "맥주", value: "맥주" },
   { title: "약과", value: "약과" },
 ];
 
+interface productWithFav extends Product {
+  favs: Fav;
+  _count: {
+    favs: number;
+    members: number;
+  };
+  isFull: boolean;
+}
+
 interface getProductData {
-  message?: string;
+  message: string;
   products: [];
 }
 

@@ -16,7 +16,7 @@ interface productWithFav extends Product {
 }
 
 interface getProductData {
-  message?: string;
+  message: string;
   products: productWithFav[];
 }
 
