@@ -34,7 +34,7 @@ const With: NextPage = () => {
       <div className="space-y-4 divide-y-[2px]">
         {data?.posts?.map((post) => (
           <Link href={`/with/${post.id}`} key={post.id}>
-            <div className="flex cursor-pointer flex-col pt-4 items-start">
+            <div className="flex cursor-pointer flex-col pt-4 items-start ">
               <span className="flex ml-4 items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                 궁금해요 📢
               </span>
