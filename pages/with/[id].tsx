@@ -7,6 +7,7 @@ import { Post, User, Answer } from "@prisma/client";
 import useUploadData from "@/libs/client/useUploadData";
 import { cls, timeForToday } from "@/libs/client/utils";
 import useSWR from "swr";
+import { useEffect } from "react";
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -41,11 +42,6 @@ const WithDetail: NextPage = () => {
   const [uploadAnswer, { loading: answerLoading, data: answerData }] =
     useUploadData(`/api/with/${router.query.id}/answer`);
 
-  const onValid = (form: AnswerForm) => {
-    if (answerLoading) return;
-    uploadAnswer(form);
-    reset();
-  };
   const onAgreeClick = () => {
     if (!data) return;
     mutate(
@@ -68,6 +64,19 @@ const WithDetail: NextPage = () => {
       uploadAgree({});
     }
   };
+
+  const onValid = (form: AnswerForm) => {
+    if (answerLoading) return;
+    uploadAnswer(form);
+    reset();
+  };
+
+  useEffect(() => {
+    if (answerData && answerData.message === "success") {
+      mutate();
+    }
+  }, [answerData, mutate]);
+
   return (
     <Layout canGoBack>
       <div>
