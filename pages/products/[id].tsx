@@ -42,7 +42,7 @@ const ItemDetail: NextPage = () => {
   const onClickWithYouBtn = () => {
     if (!data) return;
     const alreadyExist = data.product.members.some(
-      (member) => member.user.id === session.id
+      (member) => member.user.id === session?.id
     );
     if (!alreadyExist && data.isFull) {
       alert("with 멤버가  다 모였어요");
@@ -57,7 +57,7 @@ const ItemDetail: NextPage = () => {
             ...data.product,
             members: [
               ...data.product.members.filter(
-                (member) => member.user.id !== session.id
+                (member) => member.user.id !== session?.id
               ),
             ],
             _count: {
