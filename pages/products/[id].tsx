@@ -45,60 +45,44 @@ const ItemDetail: NextPage = () => {
       (member) => member.user.id === session?.id
     );
     if (!alreadyExist && data.isFull) {
-      alert("with 멤버가  다 모였어요");
+      alert("with 모집이 마감 되었어요");
       return;
     }
     joinWith({});
-    if (alreadyExist) {
-      mutate(
-        {
-          ...data,
-          product: {
-            ...data.product,
-            members: [
-              ...data.product.members.filter(
-                (member) => member.user.id !== session?.id
-              ),
-            ],
-            _count: {
-              members: data.product._count.members - 1,
+
+    const updatedMembers = alreadyExist
+      ? data.product.members.filter((member) => member.user.id !== session?.id)
+      : [
+          ...data.product.members,
+          {
+            user: {
+              id: session.id,
+              image: session.user.image,
+              name: session.user.name,
             },
           },
-          isFull:
-            data.product.people === data.product._count.members - 1
-              ? true
-              : false,
-        },
-        false
-      );
-    } else {
-      mutate(
-        {
-          ...data,
-          product: {
-            ...data.product,
-            members: [
-              ...data.product.members,
-              {
-                user: {
-                  id: session.id,
-                  image: session.user.image,
-                  name: session.user.name,
-                },
-              },
-            ],
-            _count: {
-              members: data.product._count.members + 1,
-            },
+        ];
+
+    const updatedCount = alreadyExist
+      ? data.product._count.members - 1
+      : data.product._count.members + 1;
+
+    const isFull = data.product.people === updatedCount ? true : false;
+
+    mutate(
+      {
+        ...data,
+        product: {
+          ...data.product,
+          members: updatedMembers,
+          _count: {
+            members: updatedCount,
           },
-          isFull:
-            data.product.people === data.product._count.members + 2
-              ? true
-              : false,
         },
-        false
-      );
-    }
+        isFull,
+      },
+      false
+    );
   };
   return (
     <Layout canGoBack>
