@@ -64,6 +64,6 @@ export default async function handler(
     );
     res.status(200).json({ message: "success", post, isAgree });
   } catch (error) {
-    return res.status(500).json({ message: "Failed to create product." });
+    return res.status(500).json({ message: "Failed to create post data." });
   }
 }
