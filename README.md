@@ -106,11 +106,12 @@ NextAuth.js를 사용하여 구글 로그인을 구현하였습니다.
 <br/>
 
 # 📎 Link
-<br/>
-### Youtube
+
+## Youtube
+
 <a href="https://www.youtube.com/watch?v=yMZTM6AqLrg&t=40s" target="_blank">
 시연영상 보러가기 🏃‍♂️🏃‍♀️
-</a>&nbsp
+</a>
 
 <br/>
 <br/>
