@@ -1,38 +1,116 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
 
-## Getting Started
+# **함께 사는 WITH MARKET**
 
-First, run the development server:
+<img src="https://github.com/eazyseon/with-market/assets/115395072/021eed2e-412c-4194-a942-7a63763568c2" width="200px"><br>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    1인 가구의 적정량 소비를 위한 공동 구매 서비스 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+</div>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+<br>
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1인 가구를 대상으로 대량 물품을 여럿이 나눠 구매할 수 있도록 도와주는 서비스입니다. 
+<br/>
+함께 구매하고 싶은 물품과 모집 인원을 정한 후, 참여 신청을 받아 구매할 수 있도록 해줍니다.  
+<br/>
+<br/>
 
-## Learn More
+# 프로젝트 상세 설명
 
-To learn more about Next.js, take a look at the following resources:
+## 📍 로그인 
+NextAuth.js를 사용하여 구글 로그인을 구현하였습니다. 
+<br/>
+<br/>
+<p align="center">
+<img width="330" height="415" alt="스크린샷 2023-06-03 오후 4 00 35" src="https://github.com/eazyseon/with-market/assets/115395072/45f1698e-0acf-4da1-9ac9-26fad8f6d445">
+</p>
+<br/>
+<br/>
+<br/>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📍 메인 페이지
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+이웃이 올린 물품 리스트를 확인할 수 있습니다. 
+<br/>
+<br/>
+<p align="center">
+<img  width="330" height="415" alt="스크린샷 2023-06-03 오후 3 57 36" src="https://github.com/eazyseon/with-market/assets/115395072/c0f9d4c4-dc05-42d7-9add-01459b89558e">
+<img  width="330" height="415" alt="스크린샷 2023-06-03 오후 3 54 21" src="https://github.com/eazyseon/with-market/assets/115395072/bf4399ee-27b1-4a4d-bf06-ca3da42da268">
+<img  width="330" height="415" alt="스크린샷 2023-06-03 오후 3 58 10" src="https://github.com/eazyseon/with-market/assets/115395072/e8dfb360-fb0e-4f7e-8e39-97d6f71a9dcd">
+</p>
+<br/>
+<br/>
+<br/>
 
-## Deploy on Vercel
+## 📍 WITH생활 페이지
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+사용자 위치 기반으로 반경 내의 이웃들과 정보를 공유할 수 있는 커뮤니티 게시판 입니다. 
+<br/>
+<br/>
+<p align="center">
+<img width="330" height="415" alt="with생활작성화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/f6cbaced-f5fc-451e-a3e4-ca20ce6917d1">
+<img width="330" height="415" alt="with생활화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/d4fd0950-4336-4bf1-81ad-6244afa8018f">
+<img width="330" height="415" alt="with생활상세화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/96926cdb-6f13-41d2-b887-9609b7b74577">
+</p>
+<br/>
+<br/>
+<br/>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 📍 검색 페이지
+
+검색 키워드와 매칭되는 상품 리스트를 보여줍니다. 
+<br/>
+<br/>
+<p align="center">
+<img width="330" height="415" alt="검색화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/464a6d28-3653-4d98-8eb2-2cd294f129a4">
+<img width="330" height="415" alt="검색화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/17ae6dbc-d6be-4a41-a88c-d699d9771c9a">
+</p>
+<br/>
+<br/>
+<br/>
+
+## 📍 마이 페이지
+
+내가 올린 `with me` 내가 참여한 `with you` 좋아요를 누른 `관심목록` 
+<br/>
+세 가지 탭으로 각각의 리스트를 확인할 수 있습니다. 
+<br/>
+<br/>
+<p align="center">
+<img width="330" height="415" alt="마이페이지 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/fc7c14ca-469b-4f86-be99-b3bb95ce55ce">
+<img width="330" height="415" alt="마이페이지 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/37d71c3f-3cd1-42ce-b310-cedcdb221b2f">
+<img width="330" height="415" alt="마이페이지 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/3a75c2a7-07cb-456d-8418-d4aefa0b031a">
+</p>
+<br/>
+<br/>
+<br/>
+
+# 🎯 사용 기술
+<br/>
+<p>
+<img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=Nextdotjs&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/NextAuth.js-cd41e6?style=flat-square&logo=NextAuthdotjs&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=Prisma&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/Planetscale-000000?style=flat-square&logo=Planetscale&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/Swr-000000?style=flat-square&logo=Swr&logoColor=white"/>
+<img src="https://img.shields.io/badge/Reacthookform-EC5990?style=flat-square&logo=Reacthookform&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/Tailwindcss-06B6D4?style=flat-square&logo=Tailwindcss&logoColor=white"/>&nbsp
+</p>
+<br/>
+<br/>
+<br/>
+
+# 📎 Link
+<br/>
+
+### Youtube (시연준비중)
+
+
+<br/>
+<br/>
+
