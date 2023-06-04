@@ -25,7 +25,9 @@ NextAuth.js를 사용하여 구글 로그인을 구현하였습니다.
 <br/>
 <br/>
 <p align="center">
-<img width="330" height="415" alt="스크린샷 2023-06-03 오후 4 00 35" src="https://github.com/eazyseon/with-market/assets/115395072/45f1698e-0acf-4da1-9ac9-26fad8f6d445">
+<!-- <img width="330" height="415" alt="스크린샷 2023-06-03 오후 4 00 35" src="https://github.com/eazyseon/with-market/assets/115395072/45f1698e-0acf-4da1-9ac9-26fad8f6d445"> -->
+<img alt="로그인화면" src="https://github.com/eazyseon/with-market/assets/115395072/dbf6350c-c86d-470f-9c54-78293e75f44f">
+
 </p>
 <br/>
 <br/>
@@ -33,13 +35,23 @@ NextAuth.js를 사용하여 구글 로그인을 구현하였습니다.
 
 ## 📍 메인 페이지
 
-이웃이 올린 물품 리스트를 확인할 수 있습니다. 
+이웃이 올린 with 물품 리스트를 확인할 수 있습니다. 
 <br/>
 <br/>
-<p align="center">
-<img  width="330" height="415" alt="스크린샷 2023-06-03 오후 3 57 36" src="https://github.com/eazyseon/with-market/assets/115395072/c0f9d4c4-dc05-42d7-9add-01459b89558e">
+<p>
+<!-- <img  width="330" height="415" alt="스크린샷 2023-06-03 오후 3 57 36" src="https://github.com/eazyseon/with-market/assets/115395072/c0f9d4c4-dc05-42d7-9add-01459b89558e">
 <img  width="330" height="415" alt="스크린샷 2023-06-03 오후 3 54 21" src="https://github.com/eazyseon/with-market/assets/115395072/bf4399ee-27b1-4a4d-bf06-ca3da42da268">
-<img  width="330" height="415" alt="스크린샷 2023-06-03 오후 3 58 10" src="https://github.com/eazyseon/with-market/assets/115395072/e8dfb360-fb0e-4f7e-8e39-97d6f71a9dcd">
+<img  width="330" height="415" alt="스크린샷 2023-06-03 오후 3 58 10" src="https://github.com/eazyseon/with-market/assets/115395072/e8dfb360-fb0e-4f7e-8e39-97d6f71a9dcd"> -->
+
+<img alt="with글작성화면" src="https://github.com/eazyseon/with-market/assets/115395072/17a8b47f-9dac-457d-9708-538e3d531a3c">
+<br/>
+with하고 싶은 물품을 작성할 수 있습니다. 
+<br/>
+<br/>
+<img alt="with참여,좋아요클릭" src="https://github.com/eazyseon/with-market/assets/115395072/f4366a32-d6b4-4ed0-9cd1-3e754e761c8c">
+<br/>
+이웃의 글에 with you 버튼으로 참여할 수 있고, 좋아요를 누를 수 있습니다. 
+
 </p>
 <br/>
 <br/>
@@ -50,10 +62,13 @@ NextAuth.js를 사용하여 구글 로그인을 구현하였습니다.
 사용자 위치 기반으로 반경 내의 이웃들과 정보를 공유할 수 있는 커뮤니티 게시판 입니다. 
 <br/>
 <br/>
-<p align="center">
-<img width="330" height="415" alt="with생활작성화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/f6cbaced-f5fc-451e-a3e4-ca20ce6917d1">
+<p>
+<!-- <img width="330" height="415" alt="with생활작성화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/f6cbaced-f5fc-451e-a3e4-ca20ce6917d1">
 <img width="330" height="415" alt="with생활화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/d4fd0950-4336-4bf1-81ad-6244afa8018f">
-<img width="330" height="415" alt="with생활상세화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/96926cdb-6f13-41d2-b887-9609b7b74577">
+<img width="330" height="415" alt="with생활상세화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/96926cdb-6f13-41d2-b887-9609b7b74577"> -->
+<img alt="with생활상세화면" src="https://github.com/eazyseon/with-market/assets/115395072/1debf75d-84ae-46ae-891a-3695c5ee408e">
+이웃의 질문에 답글을 달고 공감하기 버튼을 누를 수 있습니다. 
+<br/>  
 </p>
 <br/>
 <br/>
@@ -65,8 +80,9 @@ NextAuth.js를 사용하여 구글 로그인을 구현하였습니다.
 <br/>
 <br/>
 <p align="center">
-<img width="330" height="415" alt="검색화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/464a6d28-3653-4d98-8eb2-2cd294f129a4">
-<img width="330" height="415" alt="검색화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/17ae6dbc-d6be-4a41-a88c-d699d9771c9a">
+<!-- <img width="330" height="415" alt="검색화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/464a6d28-3653-4d98-8eb2-2cd294f129a4">
+<img width="330" height="415" alt="검색화면 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/17ae6dbc-d6be-4a41-a88c-d699d9771c9a"> -->
+<img alt="검색화면" src="https://github.com/eazyseon/with-market/assets/115395072/59db642d-5364-43ab-afc4-21b4fe4d5758">   
 </p>
 <br/>
 <br/>
@@ -80,9 +96,11 @@ NextAuth.js를 사용하여 구글 로그인을 구현하였습니다.
 <br/>
 <br/>
 <p align="center">
-<img width="330" height="415" alt="마이페이지 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/fc7c14ca-469b-4f86-be99-b3bb95ce55ce">
+<!-- <img width="330" height="415" alt="마이페이지 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/fc7c14ca-469b-4f86-be99-b3bb95ce55ce">
 <img width="330" height="415" alt="마이페이지 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/37d71c3f-3cd1-42ce-b310-cedcdb221b2f">
-<img width="330" height="415" alt="마이페이지 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/3a75c2a7-07cb-456d-8418-d4aefa0b031a">
+<img width="330" height="415" alt="마이페이지 캡쳐" src="https://github.com/eazyseon/with-market/assets/115395072/3a75c2a7-07cb-456d-8418-d4aefa0b031a"> -->
+ <img alt="마이페이지" src="https://github.com/eazyseon/with-market/assets/115395072/06fd48d2-f0f5-42a0-a970-520c13548bb2">    
+    
 </p>
 <br/>
 <br/>
