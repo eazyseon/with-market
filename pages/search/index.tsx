@@ -89,16 +89,6 @@ const Search: NextPage = () => {
       </div>
       <div className="flex flex-col space-y-5 divide-y">
         {data?.products?.map((product) => (
-          // <Item
-          //   key={product.id}
-          //   name={product.name}
-          //   place={product.place}
-          //   price={product.price}
-          //   people={product.people}
-          //   id={product.id}
-          //   hearts={product._count?.favs}
-          //   includeUserId={product.favs.some((el) => el.userId === session?.id)}
-          // />
           <Item
             id={product.id}
             key={product.id}

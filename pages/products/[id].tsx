@@ -8,6 +8,7 @@ import { Product, User, Member } from "@prisma/client";
 import useSWR from "swr";
 import Button from "@/components/button";
 import { useSession } from "next-auth/react";
+import Loading from "@/components/loading";
 
 interface productWithUserAndMember extends Product {
   user: User;
@@ -87,7 +88,7 @@ const ItemDetail: NextPage = () => {
   return (
     <Layout canGoBack>
       {!data ? (
-        <span>로딩중...</span>
+        <Loading />
       ) : (
         <div className="px-4 py-10">
           <div className="mb-8">
