@@ -6,10 +6,80 @@ import useSWR from "swr";
 import { useState } from "react";
 import { cls } from "@/libs/client/utils";
 import Item from "@/components/item";
+import { Session } from "next-auth/src/core/types";
+
+interface sessionId extends Session {
+  id?: string;
+}
+
+const options = [
+  {
+    id: "withme",
+    label: "WITH ME",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100
+          4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+        ></path>
+      </svg>
+    ),
+  },
+  {
+    id: "withyou",
+    label: "WITH YOU",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+        ></path>
+      </svg>
+    ),
+  },
+  {
+    id: "favs",
+    label: "관심목록",
+    icon: (
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5
+          4.5 0 00-6.364 0z"
+        ></path>
+      </svg>
+    ),
+  },
+];
 
 const MyWith: NextPage = () => {
   const [kind, setKind] = useState("withme");
-  const { data: session } = useSession();
+  const { data: session }: sessionId = useSession();
   const { data } = useSWR(`/api/mypage/${kind}`);
   return (
     <Layout hasTabBar title="나의 WITH">
@@ -47,108 +117,30 @@ const MyWith: NextPage = () => {
           )}
         </div>
         <div className="mt-10 flex justify-around">
-          <div
-            onClick={() => setKind("withme")}
-            className="flex flex-col items-center"
-          >
+          {options.map((option) => (
             <div
-              className={cls(
-                "w-14 h-14 text-white rounded-full flex items-center justify-center",
-                kind === "withme" ? "bg-primaryB-400" : "bg-gray-400"
-              )}
+              key={option.id}
+              onClick={() => setKind(option.id)}
+              className="flex flex-col items-center"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                className={cls(
+                  "w-14 h-14 text-white rounded-full flex items-center justify-center",
+                  kind === option.id ? "bg-primaryB-400" : "bg-gray-400"
+                )}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                ></path>
-              </svg>
-            </div>
-            <span
-              className={cls(
-                "text-sm mt-2 font-medium",
-                kind === "withme" ? "text-primaryB-400" : "text-gray-400"
-              )}
-            >
-              WITH ME
-            </span>
-          </div>
-          <div
-            onClick={() => setKind("withyou")}
-            className="flex flex-col items-center"
-          >
-            <div
-              className={cls(
-                "w-14 h-14 text-white rounded-full flex items-center justify-center",
-                kind === "withyou" ? "bg-primaryB-400" : "bg-gray-400"
-              )}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+                {option.icon}
+              </div>
+              <span
+                className={cls(
+                  "text-sm mt-2 font-medium",
+                  kind === option.id ? "text-primaryB-400" : "text-gray-400"
+                )}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                ></path>
-              </svg>
+                {option.label}
+              </span>
             </div>
-            <span
-              className={cls(
-                "text-sm mt-2 font-medium",
-                kind === "withyou" ? "text-primaryB-400" : "text-gray-400"
-              )}
-            >
-              WITH YOU
-            </span>
-          </div>
-          <div
-            onClick={() => setKind("favs")}
-            className="flex flex-col items-center"
-          >
-            <div
-              className={cls(
-                "w-14 h-14 text-white rounded-full flex items-center justify-center",
-                kind === "favs" ? "bg-primaryB-400" : "bg-gray-400"
-              )}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                ></path>
-              </svg>
-            </div>
-            <span
-              className={cls(
-                "text-sm mt-2 font-medium",
-                kind === "favs" ? "text-primaryB-400" : "text-gray-400"
-              )}
-            >
-              관심목록
-            </span>
-          </div>
+          ))}
         </div>
         <div className="flex flex-col space-y-5 divide-y">
           {data &&

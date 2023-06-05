@@ -14,7 +14,7 @@ export default function Component() {
       <div className="flex flex-col items-center">
         <Image
           src="/logo.jpg"
-          alt="userProfile"
+          alt="logo"
           width={120}
           height={120}
           className="rounded-full"
